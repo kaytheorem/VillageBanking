@@ -20,8 +20,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'picture',
-        'isGroupAdmin',
         'DOB',
         'fullname',
         'Username',
@@ -52,4 +50,22 @@ class User extends Authenticatable
             'isGroupAdmin' => 'boolean',
         ];
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'group_user')
+                    ->withPivot('joined_date') // Include the pivot field
+                    ->withTimestamps(); // Automatically manage timestamps for the pivot table
+    }
+
+    public function loans()
+    {
+        return $this->hasMany(Loan::class); // A user can have many loans
+    }
+
+    public function savings()
+    {
+        return $this->hasMany(Saving::class); // A user can have many savings
+    }
+
 }

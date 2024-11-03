@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('picture')->nullable();
             $table->boolean('isGroupAdmin')->default(false);
             $table->date('DOB')->nullable();
-            $table->string('fullname');
             $table->string('Username')->unique();
             $table->string('role');
             $table->rememberToken();

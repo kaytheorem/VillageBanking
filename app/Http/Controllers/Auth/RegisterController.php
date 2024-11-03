@@ -52,9 +52,13 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'fullname' => ['required', 'string', 'max:255'],
+            'Username' => ['required', 'string', 'max:255', 'unique:users'],
+            'role' => ['required', 'string', 'max:50'],
+            'DOB' => ['nullable', 'date'],
+            'picture' => ['nullable', 'string', 'max:255'], // or a file validation rule if handling file uploads
         ]);
     }
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -67,6 +71,12 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'fullname' => $data['fullname'],
+            'Username' => $data['Username'],
+            'role' => $data['role'],
+            'DOB' => $data['DOB'],
+            'picture' => $data['picture'], // Ensure that file upload handling is done elsewhere if necessary
+            'isGroupAdmin' => isset($data['isGroupAdmin']) ? $data['isGroupAdmin'] : false, // default to false if not provided
         ]);
     }
 }

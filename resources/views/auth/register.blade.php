@@ -82,36 +82,6 @@
                             @enderror
                         </div>
 
-                        <!-- Picture Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="picture">Profile Picture (Optional)</label>
-                            <input id="picture" type="file" class="form-control @error('picture') is-invalid @enderror" name="picture" accept="image/*">
-                            @error('picture')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <!-- Role Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="role">Role</label>
-                            <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
-                                <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
-                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
-                            </select>
-                            @error('role')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <!-- Is Group Admin Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="isGroupAdmin">Are you a Group Admin?</label>
-                            <input type="checkbox" id="isGroupAdmin" name="isGroupAdmin" value="1" {{ old('isGroupAdmin') ? 'checked' : '' }}>
-                        </div>
 
                         <button type="submit" class="geex-content__authentication__form-submit">Sign Up</button>
 

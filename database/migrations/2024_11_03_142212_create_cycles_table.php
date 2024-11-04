@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('status'); // Status of the cycle (e.g., 'active', 'completed', etc.)
             $table->decimal('interest_rate', 5, 2); // Interest rate (e.g., 5.00 for 5%)
             $table->string('name'); // Name of the cycle
+            $table->decimal('balance', 10, 2)->default(0.00); // Balance attribute, defaulting to 0.00
             $table->timestamps(); // Timestamps for created_at and updated_at
 
             // Foreign key constraint
             $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
+
     }
 
     /**

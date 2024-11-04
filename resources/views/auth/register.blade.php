@@ -1,133 +1,151 @@
-<!doctype html>
-<html lang="en" dir="ltr">
 
 
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-    @include('auth.inc.head')
-</head>
 
-<body class="geex-dashboard authentication-page">
-    <main class="geex-content">
-        <div class="geex-content__authentication">
-            <div class="geex-content__authentication__content">
-                <div class="geex-content__authentication__content__wrapper">
-                    <div class="geex-content__authentication__content__logo">
+        <meta charset="utf-8" />
+        <title>Register | Village Bank</title>
+        @include('auth.inc.head')
 
-                    </div>
-                    <form id="signInForm" class="geex-content__authentication__form" method="POST"
-                        action="{{ route('register') }}" enctype="multipart/form-data">
-                        @csrf
+    </head>
 
-                        <h2 class="geex-content__authentication__title">Sign Up Your Account 👋</h2>
+    <body class="bg-white">
+
+        <!-- Begin page -->
+        <div class="account-page">
+            <div class="container-fluid p-0">
+                <div class="row align-items-center g-0">
+                    <div class="col-xl-5">
+                        <div class="row">
+                            <div class="col-md-7 mx-auto">
+                                <div class="mb-0 border-0 p-md-5 p-lg-0 p-4">
 
 
-                        <!-- Display All Errors -->
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
+                                    <div class="pt-0">
+                                        <form id="signInForm" class="my-4" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                                            @csrf
+
+
+                                            <!-- Display All Errors -->
+                                            @if ($errors->any())
+                                                <div class="alert alert-danger">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endif
+
+                                            <!-- Full Name Field -->
+                                            <div class="form-group mb-3">
+                                                <label for="fullname" class="form-label">Full Name</label>
+                                                <input id="fullname" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required placeholder="Enter your Full Name" autocomplete="name" autofocus>
+                                                @error('name')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Username Field -->
+                                            <div class="form-group mb-3">
+                                                <label for="username" class="form-label">Username</label>
+                                                <input id="username" type="text" class="form-control @error('Username') is-invalid @enderror" name="Username" value="{{ old('Username') }}" required placeholder="Enter your Username">
+                                                @error('Username')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Email Field -->
+                                            <div class="form-group mb-3">
+                                                <label for="emailaddress" class="form-label">Email address</label>
+                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Enter your email">
+                                                @error('email')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Password Field -->
+                                            <div class="form-group mb-3">
+                                                <label for="password" class="form-label">Password</label>
+                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="Enter your password">
+                                                @error('password')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <!-- Confirm Password Field -->
+                                            <div class="form-group mb-3">
+                                                <label for="password-confirm" class="form-label">Confirm Password</label>
+                                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="Confirm your password">
+                                            </div>
+
+                                            <!-- Date of Birth Field -->
+                                            <div class="form-group mb-3">
+                                                <label for="DOB" class="form-label">Date of Birth</label>
+                                                <input id="DOB" type="date" class="form-control @error('DOB') is-invalid @enderror" name="DOB" value="{{ old('DOB') }}">
+                                                @error('DOB')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
+                                            <input type="hidden" name="role" value="member">
+
+
+                                            <div class="form-group mb-0 row">
+                                                <div class="col-12">
+                                                    <div class="d-grid">
+                                                        <button class="btn btn-primary" type="submit"> Register</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </form>
+
+
+                                        <div class="text-center text-muted mb-4">
+                                            <p class="mb-0">Already have an account? <a class='text-primary ms-2 fw-medium' href='{{ route('login') }}'>Login here</a></p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
                             </div>
-                        @endif
-
-                        <!-- Full Name Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="fullname">Full Name</label>
-                            <input id="fullname" type="text"
-                                class="form-control @error('name') is-invalid @enderror" name="name"
-                                value="{{ old('name') }}" required autocomplete="name" autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
                         </div>
+                    </div>
 
-                        <!-- Username Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="Username">Username</label>
-                            <input id="Username" type="text"
-                                class="form-control @error('Username') is-invalid @enderror" name="Username"
-                                value="{{ old('Username') }}" required autocomplete="username">
-                            @error('Username')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                    <div class="col-xl-7">
+                        <div class="account-page-bg p-md-5 p-4">
+                            <div class="text-center">
+                                <h3 class="text-dark mb-3 pera-title">Quick, Effective, and Productive With Tapeli Admin Dashboard</h3>
+                                <div class="auth-image">
+                                    <img src="html/assets/images/authentication.svg" class="mx-auto img-fluid"  alt="images">
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Email Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="emailSignIn">Your Email</label>
-                            <input id="email" type="email"
-                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                value="{{ old('email') }}" required autocomplete="email">
-                            @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <!-- Password Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="loginPassword">Password</label>
-                            <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="new-password">
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <!-- Confirm Password Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="password-confirm">Confirm Password</label>
-                            <input id="password-confirm" type="password" class="form-control"
-                                name="password_confirmation" required autocomplete="new-password">
-                        </div>
-
-                        <!-- Date of Birth Field -->
-                        <div class="geex-content__authentication__form-group">
-                            <label for="DOB">Date of Birth</label>
-                            <input id="DOB" type="date" class="form-control @error('DOB') is-invalid @enderror"
-                                name="DOB" value="{{ old('DOB') }}">
-                            @error('DOB')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <!-- Hidden Role Field -->
-                        <input type="hidden" name="role" value="member">
-
-                        <button type="submit" class="geex-content__authentication__form-submit">Sign Up</button>
-
-                        <span class="geex-content__authentication__form-separator">Or</span>
-
-                        <div class="geex-content__authentication__form-footer">
-                            already have an account? <a href="{{ route('login') }}">Sign In</a>
-                        </div>
-                    </form>
-
+                    </div>
 
                 </div>
             </div>
-            <div class="geex-content__authentication__img">
-                <img src="dashboard/assets/img/authentication.svg" alt="">
-            </div>
         </div>
-    </main>
+        <!-- END wrapper -->
 
-    <!-- inject:js-->
-    @include('auth.inc.js')
-    <!-- endinject-->
-</body>
+        <!-- Vendor -->
+        @include('auth.inc.js')
 
+    </body>
 
 </html>

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->id(); // Primary key
             $table->unsignedBigInteger('user_id'); // Foreign key to users
-            $table->unsignedBigInteger('cycle_id'); // Foreign key to cycles
+            $table->unsignedBigInteger('cycle_id');
+            $table->decimal('amount', 10, 2); // Amount
+            // Foreign key to cycles
             $table->decimal('return_amount', 10, 2); // Amount to return
             $table->decimal('interest', 5, 2); // Interest amount
             $table->date('return_date'); // Date by which the loan should be returned

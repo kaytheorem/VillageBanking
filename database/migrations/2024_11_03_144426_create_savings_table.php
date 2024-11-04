@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id(); // Primary key
             $table->decimal('amount', 10, 2); // Amount saved
             $table->string('network'); // Network options
+            $table->string('phone'); // Network options
+
             $table->unsignedBigInteger('user_id'); // Foreign key to users
             $table->unsignedBigInteger('cycle_id'); // Foreign key to cycles
             $table->timestamps(); // Timestamps for created_at and updated_at

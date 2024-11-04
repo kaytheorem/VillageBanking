@@ -13,6 +13,7 @@ class SavingController extends Controller
     public function index()
     {
         //
+        return view('mySavings');
     }
 
     /**

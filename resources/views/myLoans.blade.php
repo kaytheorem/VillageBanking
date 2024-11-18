@@ -73,12 +73,12 @@
 
                         <br><br>
                         <div class="card-body">
-                            <table id="datatable"
-                                class="table table-bordered dt-responsive table-responsive nowrap w-100">
+                            <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap w-100">
                                 <thead>
                                     <tr>
                                         <th>Count</th>
                                         <th>Group Name</th>
+                                        <th>Cycle Name</th>
                                         <th>Loan Amount</th>
                                         <th>Return Amount</th>
                                         <th>Status</th>
@@ -88,22 +88,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Family Chilimba</td>
-                                        <td>ZMW 500</td>
-                                        <td>600</td>
-                                        <td>Active</td>
-                                        <td>100</td>
-                                        <td>03/*11/2024</td>
-                                        <td>03/*11/2024</td>
-                                    </tr>
-
-
+                                    @foreach($loans as $loan)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td> <!-- Count (1, 2, 3, ...) -->
+                                            <td>{{ $loan->cycle->group->name ?? 'N/A' }}</td> <!-- Group Name (from Cycle model) -->
+                                            <td>{{ $loan->cycle->name ?? 'N/A' }}</td> <!-- Group Name (from Cycle model) -->
+                                            <td>ZMW {{ number_format($loan->amount, 2) }}</td> <!-- Loan Amount -->
+                                            <td>ZMW {{ number_format($loan->return_amount, 2) }}</td> <!-- Return Amount -->
+                                            <td>{{ ucfirst($loan->status) }}</td> <!-- Status -->
+                                            <td>ZMW {{ number_format($loan->interest, 2) }}</td> <!-- Interest -->
+                                            <td>{{ $loan->created_at ? $loan->created_at->format('d/m/Y') : 'N/A' }}</td> <!-- Loan Taken Date -->
+                                            <td>{{ $loan->return_date ? $loan->return_date->format('d/m/Y') : 'N/A' }}</td> <!-- Expected Return Date -->
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
+
+
 
 
 

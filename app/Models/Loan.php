@@ -9,7 +9,11 @@ class Loan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'cycle_id', 'return_amount', 'interest', 'return_date']; // Allow mass assignment for these fields
+    protected $fillable = ['user_id', 'cycle_id', 'amount', 'return_amount', 'interest', 'return_date']; // Allow mass assignment for these fields
+
+    protected $casts = [
+        'return_date' => 'datetime', // Ensure return_date is cast to a Carbon instance
+    ];
 
     /**
      * Get the user that owns the loan.

@@ -23,9 +23,10 @@
                 <li class="dropdown notification-list topbar-dropdown">
                     <a class="nav-link dropdown-toggle nav-user me-0" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="html/assets/images/users/user-16.jpeg" alt="user-image" class="rounded-circle">
+                        <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('html/assets/images/users/user-16.webp') }}"
+                            alt="user-image" class="rounded-circle">
                         <span class="pro-user-name ms-1">
-                            Mpangeh <i class="mdi mdi-chevron-down"></i>
+                            {{ $user->Username }} <i class="mdi mdi-chevron-down"></i>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
@@ -35,24 +36,25 @@
                         </div>
 
                         <!-- item-->
-                        <a class='dropdown-item notify-item' href='pages-profile.html'>
+                        <a class='dropdown-item notify-item' href='{{ route('my.profile') }}'>
                             <i class="mdi mdi-account-circle-outline fs-16 align-middle"></i>
                             <span>My Account</span>
-                        </a>
-
-                        <!-- item-->
-                        <a class='dropdown-item notify-item' href='auth-lock-screen.html'>
-                            <i class="mdi mdi-lock-outline fs-16 align-middle"></i>
-                            <span>Lock Screen</span>
                         </a>
 
                         <div class="dropdown-divider"></div>
 
                         <!-- item-->
-                        <a class='dropdown-item notify-item' href='auth-logout.html'>
+                        <a class='dropdown-item notify-item' href='{{ route('logout') }}'
+                            onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
                             <i class="mdi mdi-location-exit fs-16 align-middle"></i>
                             <span>Logout</span>
                         </a>
+
+                        <!-- Logout Form -->
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
 
                     </div>
                 </li>

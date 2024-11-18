@@ -76,10 +76,10 @@
             <div class="collapse" id="sidebarError">
                 <ul class="nav-second-level">
                     <li>
-                        <a class='tp-link' href='error-404.html'>Profit Management</a>
+                        <a class='tp-link' href='#' onclick="event.preventDefault();">Profit Management</a>
                     </li>
                     <li>
-                        <a class='tp-link' href='{{ route('my.savings') }}'>View Saving History</a>
+                        <a class='tp-link' href='{{ route('my.savings') }}'>View My Saving History</a>
                     </li>
 
                 </ul>

@@ -9,7 +9,7 @@ class Saving extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['amount', 'network', 'user_id', 'cycle_id']; // Allow mass assignment for these fields
+    protected $fillable = ['amount', 'phone', 'network', 'user_id', 'cycle_id']; // Allow mass assignment for these fields
 
     /**
      * Get the user that owns the saving.

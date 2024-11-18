@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,7 +14,9 @@ class UserController extends Controller
     public function index()
     {
         //
-        return view('profile');
+        $user = Auth::user();
+
+        return view('profile', compact('user'));
     }
 
     /**
@@ -42,9 +46,40 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function editProfile (Request $request)
     {
-        //
+        $user = Auth::user(); // Get the currently authenticated user
+
+        // Validate the incoming data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id, // Email uniqueness check excluding current user
+            'password' => 'nullable|string|min:8|confirmed', // Optional password change
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Profile picture validation
+        ]);
+
+        // Update the user's name and email
+        $user->name = $request->name;
+        $user->email = $request->email;
+
+        // If a new profile picture is uploaded
+        if ($request->hasFile('profile_picture')) {
+            // Store the image and get its path
+            $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
+
+            // Update the profile picture path
+            $user->profile_picture = $imagePath;
+        }
+
+        // If a new password is provided, hash it and update
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        // Save the changes
+        $user->save();
+
+        return redirect()->back()->with('success', 'Profile updated successfully!');
     }
 
     /**

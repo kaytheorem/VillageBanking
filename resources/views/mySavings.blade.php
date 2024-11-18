@@ -73,8 +73,7 @@
 
                         <br><br>
                         <div class="card-body">
-                            <table id="datatable"
-                                class="table table-bordered dt-responsive table-responsive nowrap w-100">
+                            <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap w-100">
                                 <thead>
                                     <tr>
                                         <th>Count</th>
@@ -87,21 +86,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Family Chilimba</td>
-                                        <td>ZMW 500</td>
-                                        <td>MTN</td>
-                                        <td>Cycle 2</td>
-                                        <td>09645812122</td>
-                                        <td>03/*11/2024</td>
-                                    </tr>
-
-
+                                    @foreach($savings as $saving)
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td> <!-- Display count (1, 2, 3, ...) -->
+                                            <td>{{ $saving->cycle->group->name ?? 'N/A' }}</td> <!-- Group Name (from Cycle model, assuming each cycle is associated with a group) -->
+                                            <td>ZMW {{ number_format($saving->amount, 2) }}</td> <!-- Amount Saved -->
+                                            <td>{{ $saving->network }}</td> <!-- Network -->
+                                            <td>{{ $saving->cycle->name ?? 'N/A' }}</td> <!-- Cycle Name -->
+                                            <td>{{ $saving->phone }}</td> <!-- Phone Number -->
+                                            <td>{{ $saving->created_at ? $saving->created_at->format('d/m/Y') : 'N/A' }}</td> <!-- Date Saved -->
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
+
 
 
 

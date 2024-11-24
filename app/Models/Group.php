@@ -13,6 +13,7 @@ class Group extends Model
 
     protected $fillable = [
         'name',  // Add the group name
+        'code',
     ];
 
     public function users()

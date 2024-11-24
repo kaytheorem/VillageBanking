@@ -27,6 +27,43 @@ class GroupController extends Controller
         return view('index', compact('groups', 'user')); // Make sure to create this view
     }
 
+    public function allGroups(){
+
+        $user = Auth::user();
+        $groups= Group::all();
+
+        return view('allGroups', compact('user', 'groups'));
+    }
+
+    public function join(Request $request)
+    {
+        $request->validate([
+            'group_id' => 'required|exists:groups,id',
+            'group_code' => 'required|string',
+        ]);
+    
+        $group = Group::findOrFail($request->group_id);
+    
+        // Check if the provided code matches
+        if ($group->code !== $request->group_code) {
+            return redirect()->back()->with('error', 'Invalid group code.');
+        }
+    
+        // Check if the user is already in the group
+        if ($group->users()->where('users.id', Auth::id())->exists()) {
+            return redirect()->back()->with('info', 'You are already a member of this group.');
+        }
+        
+    
+        // Add the user to the group
+        $group->users()->attach(Auth::id());
+    
+        return redirect()->route('groups.show', $group->id)
+            ->with('success', 'You have successfully joined the group!');
+    }
+    
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -45,6 +82,7 @@ class GroupController extends Controller
         // Create the Group
         $group = Group::create([
             'name' => $request->input('group_name'),
+            'code' => strtoupper(Str::random(6)), // Generate a 6-character unique code
         ]);
 
         $group->users()->attach($userId, ['joined_date' => now()]);
@@ -111,36 +149,6 @@ class GroupController extends Controller
         return route('group.invite', ['token' => $token]);
     }
 
-
-    public function handleInvite($token)
-    {
-        // Check if the token is valid
-        $invite = Invite::where('token', $token)->where('status', 'pending')->first();
-
-        if (!$invite) {
-            return redirect('/')->with('error', 'Invalid or expired invite link.');
-        }
-
-        // If user is not logged in, redirect to login with the invite token in session
-        if (!Auth::check()) {
-            session(['invite_token' => $token]);
-            return redirect()->route('login');
-        }
-
-        // If logged in, add the user to the group
-        return $this->addUserToGroup($invite->group_id, Auth::user()->id);
-    }
-
-    private function addUserToGroup($groupId, $userId)
-    {
-        $group = Group::findOrFail($groupId);
-        $group->users()->attach($userId); // Add user to group
-
-        // Mark invite as accepted
-        Invite::where('group_id', $groupId)->where('token', session('invite_token'))->update(['status' => 'accepted']);
-
-        return redirect()->route('my.groups')->with('success', 'You have successfully joined the group.');
-    }
 
     /**
      * Show the form for editing the specified resource.

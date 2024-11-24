@@ -43,7 +43,11 @@
                         <a class='tp-link' href='{{ route('add.group') }}'>Add Goup</a>
                     </li>
                     <li>
-                        <a class='tp-link' href='{{ route('my.groups') }}'>All Groups</a>
+                        <a class='tp-link' href='{{ route('my.groups') }}'>My Groups</a>
+                    </li>
+
+                    <li>
+                        <a class='tp-link' href='{{ route('all.groups') }}'>All Groups</a>
                     </li>
                 </ul>
             </div>

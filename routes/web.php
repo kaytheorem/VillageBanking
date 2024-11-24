@@ -19,7 +19,7 @@ Route::middleware(['auth'])->group(function () {
         $totalProfits = $user->savings()->sum('amount') - $user->loans()->sum('amount');// Assuming a relationship exists for profits
 
         // Pass these variables to the view
-        return view('home', compact('user', 'totalGroups', 'totalLoanAmount', 'totalSavingsAmount', 'totalProfits'));
+        return view('home', data: compact('user', 'totalGroups', 'totalLoanAmount', 'totalSavingsAmount', 'totalProfits'));
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -35,7 +35,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/add-group', [GroupController::class, 'create'])->name('add.group');
     Route::post('/store-group', [GroupController::class, 'store'])->name('group.store');
     Route::get('/my-groups', [GroupController::class, 'index'])->name('my.groups');
+    Route::get('/all-groups', [GroupController::class, 'allGroups'])->name('all.groups');
     Route::get('/show-group/{id}', [GroupController::class, 'show'])->name('group.show');
+    Route::post('/groups/join', [GroupController::class, 'join'])->name('groups.join');
+
 
     //Loan Managemnt
     Route::get('/my-loans', [LoanController::class, 'index'])->name('my.loans');
@@ -44,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
     //Savings Management
     Route::get('/my-savings', [SavingController::class, 'index'])->name('my.savings');
     Route::post('/add-saving', [SavingController::class, 'store'])->name('savings.store');
-
+  
     //User management
     Route::get('/my-profile', [UserController::class, 'index'])->name('my.profile');
     // web.php (routes)

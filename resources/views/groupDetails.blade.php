@@ -224,12 +224,15 @@
 
                                                 <div class="card-body">
 
+                                                    @if ($activeCycle)
                                                     <div class="d-flex flex-wrap gap-2">
                                                         <button type="button" class="btn btn-primary"
                                                             onclick="generateInviteLink({{ $group->id }})">
                                                             Invite Member
                                                         </button>
                                                     </div>
+                                                    @endif
+
 
                                                     <!-- Modal to show invite link -->
                                                     <div class="modal fade" id="modal1" tabindex="-1"
@@ -310,13 +313,17 @@
                                                 <div class="col-xl-6">
                                                     <div class="card">
                                                         <div class="card-body">
-                                                            <div class="d-flex flex-wrap gap-2">
+
+                                                        @if ($activeCycle)
+                                                        <div class="d-flex flex-wrap gap-2">
                                                                 <button type="button" class="btn btn-primary"
                                                                     data-bs-toggle="modal"
                                                                     data-bs-target="#depositModal">
                                                                     Deposit Saving
                                                                 </button>
                                                             </div>
+                                                        @endif
+
 
                                                             <!-- Deposit Saving Modal -->
                                                             <div class="modal fade" id="depositModal"
@@ -516,6 +523,9 @@
                                                 <div class="col-xl-6">
                                                     <div class="card">
                                                         <div class="card-body">
+
+
+                                                        @if ($activeCycle)
                                                             <div class="d-flex flex-wrap gap-2">
                                                                 <button type="button" class="btn btn-primary"
                                                                     data-bs-toggle="modal"
@@ -523,6 +533,8 @@
                                                                     Get A Loan
                                                                 </button>
                                                             </div>
+                                                        @endif
+
 
                                                             <!-- Loan Modal -->
                                                             <div class="modal fade" id="loanModal" tabindex="-1"
@@ -598,7 +610,8 @@
                                                 </div>
 
                                                 <script>
-                                                    const interestRate = {{ $activeCycle->interest_rate / 100 }}; // Assuming you pass the cycle rate from the backend
+                                                    
+                                                    const interestRate = {{ $activeCycle ? $activeCycle->interest_rate / 100 : 0 }}; // Handle null activeCycle
 
                                                     function calculateReturn() {
                                                         const amount = parseFloat(document.getElementById("amount").value) || 0;
@@ -698,6 +711,11 @@
                                                 <td><strong>Late Payment Fee</strong></td>
                                                 <td>{{ number_format($group->constitution->late_payment_fee ?? 0, 2) }}
                                                     %</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><strong>Group Code</strong></td>
+                                                <td>{{$group->code}}</td>
                                             </tr>
                                         </tbody>
                                     </table>

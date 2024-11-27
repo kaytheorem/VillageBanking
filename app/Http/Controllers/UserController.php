@@ -46,41 +46,43 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function editProfile (Request $request)
+    public function editProfile(Request $request)
     {
         $user = Auth::user(); // Get the currently authenticated user
-
+    
         // Validate the incoming data
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id, // Email uniqueness check excluding current user
             'password' => 'nullable|string|min:8|confirmed', // Optional password change
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Profile picture validation
+            'gender' => 'nullable|string|in:Male,Female,Other', // Validate gender
+            'location' => 'nullable|string|max:255', // Validate location
         ]);
-
-        // Update the user's name and email
+    
+        // Update the user's name, email, gender, and location
         $user->name = $request->name;
         $user->email = $request->email;
-
+        $user->gender = $request->gender;
+        $user->location = $request->location;
+    
         // If a new profile picture is uploaded
         if ($request->hasFile('profile_picture')) {
-            // Store the image and get its path
             $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
-
-            // Update the profile picture path
-            $user->profile_picture = $imagePath;
+            $user->picture = $imagePath; // Use the 'picture' column
         }
-
+    
         // If a new password is provided, hash it and update
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
-
+    
         // Save the changes
         $user->save();
-
+    
         return redirect()->back()->with('success', 'Profile updated successfully!');
     }
+    
 
     /**
      * Update the specified resource in storage.

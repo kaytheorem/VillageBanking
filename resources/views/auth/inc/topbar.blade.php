@@ -23,7 +23,7 @@
                 <li class="dropdown notification-list topbar-dropdown">
                     <a class="nav-link dropdown-toggle nav-user me-0" data-bs-toggle="dropdown" href="#"
                         role="button" aria-haspopup="false" aria-expanded="false">
-                        <img src="{{ $user->profile_picture ? asset('storage/' . $user->profile_picture) : asset('html/assets/images/users/user-16.webp') }}"
+                        <img src="{{ $user->picture ? Storage::url($user->picture) : asset('html/assets/images/users/user-16.webp') }}"
                             alt="user-image" class="rounded-circle">
                         <span class="pro-user-name ms-1">
                             {{ $user->Username }} <i class="mdi mdi-chevron-down"></i>
